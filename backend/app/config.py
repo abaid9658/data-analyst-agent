@@ -74,14 +74,6 @@ class Settings(BaseSettings):
     GOOGLE_AI_API_KEY: str = ""
     GOOGLE_AI_MODEL: str = "gemini-2.5-flash"
 
-    # OpenAI (optional fallback — paid)
-    OPENAI_API_KEY: str = ""
-    OPENAI_MODEL: str = "gpt-4o"
-
-    # Anthropic (optional fallback — paid)
-    ANTHROPIC_API_KEY: str = ""
-    ANTHROPIC_MODEL: str = "claude-3-5-sonnet-20241022"
-
     # ── Object Storage ───────────────────────────────────────────────────────
     STORAGE_PROVIDER: Literal["minio", "s3"] = "minio"
     MINIO_ENDPOINT: str = "localhost:9000"
@@ -130,20 +122,8 @@ class Settings(BaseSettings):
                 google_api_key=self.GOOGLE_AI_API_KEY,
                 temperature=temperature,
             )
-        elif self.LLM_PROVIDER == "anthropic":
-            from langchain_anthropic import ChatAnthropic
-            return ChatAnthropic(
-                model=self.ANTHROPIC_MODEL,
-                anthropic_api_key=self.ANTHROPIC_API_KEY,
-                temperature=temperature,
-            )
-        else:  # openai fallback
-            from langchain_openai import ChatOpenAI
-            return ChatOpenAI(
-                model=self.OPENAI_MODEL,
-                openai_api_key=self.OPENAI_API_KEY,
-                temperature=temperature,
-            )
+        else:
+            raise ValueError(f"Unsupported LLM_PROVIDER: {self.LLM_PROVIDER}")
 
 
 @lru_cache

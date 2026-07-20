@@ -6,9 +6,9 @@ declare module 'plotly.js-dist-min' {
     _fullLayout: PlotlyLayout;
   }
 
-  type PlotlyData = Record<string, unknown>;
-  type PlotlyLayout = Record<string, unknown>;
-  type PlotlyConfig = Record<string, unknown>;
+  type PlotlyData = any;
+  type PlotlyLayout = any;
+  type PlotlyConfig = any;
 
   function newPlot(
     root: HTMLElement | string,
