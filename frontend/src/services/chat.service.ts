@@ -3,7 +3,7 @@ import type { ConversationListResponse, MessageListResponse, SendMessageRequest,
 
 export const chatService = {
   streamMessage: (request: SendMessageRequest): AsyncGenerator<StreamChunk> => {
-    return streamSSE("/chat/message", request as Record<string, unknown>) as AsyncGenerator<StreamChunk>;
+    return streamSSE("/chat/message", request as unknown as Record<string, unknown>) as AsyncGenerator<StreamChunk>;
   },
 
   getSessions: async (): Promise<ConversationListResponse> => {

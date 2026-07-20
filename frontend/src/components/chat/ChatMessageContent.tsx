@@ -63,20 +63,19 @@ export function ChatMessageContent({ message }: ChatMessageContentProps) {
         <div className="prose prose-invert prose-sm max-w-none">
           <ReactMarkdown
             components={{
-              code({ node, className, children, ...props }) {
+              code({ className, children }) {
                 const match = /language-(\w+)/.exec(className || "");
                 return match ? (
                   <SyntaxHighlighter
-                    style={vscDarkPlus as Record<string, React.CSSProperties>}
+                    style={vscDarkPlus as any}
                     language={match[1]}
                     PreTag="div"
                     className="rounded-lg text-xs"
-                    {...props}
                   >
                     {String(children).replace(/\n$/, "")}
                   </SyntaxHighlighter>
                 ) : (
-                  <code className="bg-surface-elevated px-1.5 py-0.5 rounded text-xs font-mono text-primary-300" {...props}>
+                  <code className="bg-surface-elevated px-1.5 py-0.5 rounded text-xs font-mono text-primary-300">
                     {children}
                   </code>
                 );
@@ -157,7 +156,7 @@ function SQLBlock({ sql }: { sql: string }) {
         </div>
       </div>
       <SyntaxHighlighter
-        style={vscDarkPlus as Record<string, React.CSSProperties>}
+        style={vscDarkPlus as any}
         language="sql"
         customStyle={{ background: "transparent", padding: "16px", margin: 0, fontSize: "12px" }}
       >
@@ -191,7 +190,7 @@ function CodeBlock({ code, language, label }: { code: string; language: string; 
         </button>
       </div>
       <SyntaxHighlighter
-        style={vscDarkPlus as Record<string, React.CSSProperties>}
+        style={vscDarkPlus as any}
         language={language}
         customStyle={{ background: "transparent", padding: "16px", margin: 0, fontSize: "12px" }}
       >
