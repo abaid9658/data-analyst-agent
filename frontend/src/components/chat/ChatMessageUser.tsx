@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import { useAuthStore } from "@/store/auth.store";
@@ -30,9 +31,15 @@ export function ChatMessageUser({ content, className }: ChatMessageUserProps) {
       </div>
 
       {/* Avatar */}
-      <div className="w-8 h-8 rounded-full bg-primary-600 flex-shrink-0 flex items-center justify-center overflow-hidden">
+      <div className="w-8 h-8 rounded-full bg-primary-600 flex-shrink-0 flex items-center justify-center overflow-hidden relative">
         {user?.avatar_url ? (
-          <img src={user.avatar_url} alt="You" className="w-full h-full object-cover" />
+          <Image
+            src={user.avatar_url}
+            alt="You"
+            fill
+            className="object-cover"
+            unoptimized
+          />
         ) : (
           <User className="w-4 h-4 text-white" />
         )}

@@ -13,10 +13,12 @@ export function PlotlyChart({ spec, className }: PlotlyChartProps) {
 
   useEffect(() => {
     let mounted = true;
+    // Capture ref value at effect time to use safely in cleanup
+    const container = containerRef.current;
 
     const renderChart = async () => {
       const Plotly = await import("plotly.js-dist-min");
-      if (!mounted || !containerRef.current) return;
+      if (!mounted || !container) return;
 
       const config = {
         responsive: true,
@@ -45,16 +47,17 @@ export function PlotlyChart({ spec, className }: PlotlyChartProps) {
         yaxis: { ...(spec.layout?.yaxis ?? {}), gridcolor: "#252540", zerolinecolor: "#3A3A60" },
       };
 
-      await Plotly.newPlot(containerRef.current, spec.data || [], layout, config);
+      await Plotly.newPlot(container, spec.data || [], layout, config);
     };
 
     renderChart();
 
     return () => {
       mounted = false;
-      if (containerRef.current) {
+      // Use the captured container variable — safe in cleanup
+      if (container) {
         import("plotly.js-dist-min").then((Plotly) => {
-          if (containerRef.current) Plotly.purge(containerRef.current);
+          Plotly.purge(container);
         });
       }
     };
