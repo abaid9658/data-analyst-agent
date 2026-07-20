@@ -36,7 +36,7 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const register: ReturnType<typeof useAuthStore>["register"] = useAuthStore((s) => s.register);
+  const register = useAuthStore((s) => s.register);
   const router = useRouter();
 
   const {
