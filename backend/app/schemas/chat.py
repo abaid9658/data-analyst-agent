@@ -3,7 +3,7 @@ Chat Pydantic schemas
 """
 import uuid
 from datetime import datetime
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, Field, AliasChoices
 from app.schemas.auth import UserResponse
 
 
@@ -19,7 +19,7 @@ class MessageResponse(BaseModel):
     id: uuid.UUID
     role: str
     content: str
-    metadata: dict | None = None
+    metadata: dict | None = Field(default=None, validation_alias=AliasChoices("msg_metadata", "metadata"))
     prompt_tokens: int | None = None
     completion_tokens: int | None = None
     processing_time_ms: int | None = None
