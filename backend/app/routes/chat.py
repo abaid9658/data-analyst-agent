@@ -13,8 +13,8 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from agents.orchestrator import AgentOrchestrator
 from app.database.base import get_db
-from app.middleware.auth import get_current_user
-from app.models.conversation import Conversation, Message
+from app.models.conversation import Conversation
+from app.models.message import Message
 from app.models.dataset import Dataset
 from app.models.user import User
 from app.schemas.chat import (
@@ -138,7 +138,7 @@ async def send_message(
                         conversation_id=conversation.id,
                         role="assistant",
                         content="\n".join(full_response_parts),
-                        metadata=metadata if metadata else None,
+                        msg_metadata=metadata if metadata else None,
                         model_used="gpt-4o",
                     )
                     db.add(assistant_msg)

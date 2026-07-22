@@ -29,6 +29,14 @@ class Message(Base):
     # Rich metadata for assistant messages (SQL, charts, insights, plan)
     msg_metadata: Mapped[dict | None] = mapped_column("metadata", JSONB, nullable=True)
 
+    @property
+    def metadata(self) -> dict | None:
+        return self.msg_metadata
+
+    @metadata.setter
+    def metadata(self, value: dict | None) -> None:
+        self.msg_metadata = value
+
     # Token usage
     prompt_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
     completion_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
