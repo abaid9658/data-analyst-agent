@@ -29,6 +29,9 @@ AsyncSessionLocal = async_sessionmaker(
     expire_on_commit=False,
 )
 
+# Alias used by Celery task files
+async_session_maker = AsyncSessionLocal
+
 
 class Base(DeclarativeBase):
     pass

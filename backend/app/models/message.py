@@ -27,7 +27,7 @@ class Message(Base):
     content: Mapped[str] = mapped_column(Text, nullable=False)
 
     # Rich metadata for assistant messages (SQL, charts, insights, plan)
-    metadata: Mapped[dict | None] = mapped_column(JSONB, nullable=True)
+    msg_metadata: Mapped[dict | None] = mapped_column("metadata", JSONB, nullable=True)
 
     # Token usage
     prompt_tokens: Mapped[int | None] = mapped_column(Integer, nullable=True)
