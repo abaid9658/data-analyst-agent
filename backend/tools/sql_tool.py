@@ -5,7 +5,7 @@ import logging
 import re
 from typing import Any
 
-from langchain_openai import ChatOpenAI
+from app.config import settings
 from langchain_core.messages import HumanMessage, SystemMessage
 from sqlalchemy import text
 
@@ -64,11 +64,7 @@ class SQLTool(BaseTool):
     description = "Convert natural language to SQL queries and execute them"
 
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model=settings.OPENAI_MODEL,
-            temperature=0,
-            response_format={"type": "json_object"},
-        )
+        self.llm = settings.get_llm(temperature=0)
 
     async def execute(self, params: dict[str, Any]) -> dict:
         question = params.get("question") or params.get("user_message", "")

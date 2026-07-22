@@ -10,7 +10,6 @@ from typing import Any
 import numpy as np
 import pandas as pd
 from langchain_core.messages import HumanMessage, SystemMessage
-from langchain_openai import ChatOpenAI
 
 from app.config import settings
 from tools.base_tool import BaseTool
@@ -49,11 +48,7 @@ class PythonTool(BaseTool):
     description = "Execute Python data analysis code with Pandas, NumPy, SciPy"
 
     def __init__(self):
-        self.llm = ChatOpenAI(
-            model=settings.OPENAI_MODEL,
-            temperature=0,
-            response_format={"type": "json_object"},
-        )
+        self.llm = settings.get_llm(temperature=0)
 
     async def execute(self, params: dict[str, Any]) -> dict:
         question = params.get("question") or params.get("user_message", "")
