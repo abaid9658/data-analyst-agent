@@ -4,7 +4,7 @@ import { Bell, Database, Moon, Search, Sun, Upload } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useChatStore } from "@/store/chat.store";
 import { useDatasets } from "@/hooks/useDatasets";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function Header() {
   const { theme, setTheme } = useTheme();
@@ -12,6 +12,11 @@ export function Header() {
   const { data: datasetsData } = useDatasets();
   const datasets = datasetsData?.datasets ?? [];
   const [showDatasetPicker, setShowDatasetPicker] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const selectedDataset = datasets.find((d) => d.id === selectedDatasetId);
 
@@ -80,12 +85,17 @@ export function Header() {
           <Search className="w-4 h-4" />
         </button>
 
-        {/* Theme toggle */}
         <button
           onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
           className="p-2 rounded-lg text-gray-400 hover:text-gray-200 hover:bg-surface-elevated transition-all"
         >
-          {theme === "dark" ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+          {!mounted ? (
+            <div className="w-4 h-4" />
+          ) : theme === "dark" ? (
+            <Sun className="w-4 h-4" />
+          ) : (
+            <Moon className="w-4 h-4" />
+          )}
         </button>
 
         {/* Notifications */}
