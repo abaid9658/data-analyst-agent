@@ -13,6 +13,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 
 from agents.orchestrator import AgentOrchestrator
 from app.database.base import get_db
+from app.middleware.auth import get_current_user
 from app.models.conversation import Conversation
 from app.models.message import Message
 from app.models.dataset import Dataset
